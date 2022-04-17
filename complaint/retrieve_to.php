@@ -32,8 +32,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td>" . $row['role'] . "</td>";
-                echo '<td><a href="update.php?id=' . $row['id'] . '">Edit</a></td>';
-                echo '<td><a href="delete.php? id=' . $row['id'] . '">Delete</a> </td>';
+                echo '<td><a href="update_users.php?id=' . $row['id'] . '">Edit</a></td>';
+                echo '<td><a href="delete_users.php? id=' . $row['id'] . '">Delete</a> </td>';
                 echo "</tr>";
 
             }
@@ -63,8 +63,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 echo "<td>" . $row['product_description'] . "</td>";
                 echo "<td>" . $row['complaint'] . "</td>";
                 echo "<td>" . $row['status'] . "</td>";
-                echo '<td><a href="update.php?id=' . $row['id'] . '">Edit</a></td>';
-                echo '<td><a href="delete.php? id=' . $row['id'] . '">Delete</a> </td>';
+                echo '<td><a href="update_complaints.php?id=' . $row['id'] . '">Edit</a></td>';
+                echo '<td><a href="delete_complaints.php?id=' . $row['id'] . '">Delete</a> </td>';
                 echo "</tr>";
 
             }
@@ -73,7 +73,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 
             mysqli_free_result($result);
         } else {
-            echo "ERROR:Could not able to execute $sql." . mysqli_error($link);
+            echo "Such Empty! Much wow !! <br> No complaints.";
         }
         mysqli_close($link);
     }

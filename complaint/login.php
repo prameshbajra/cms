@@ -67,9 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <br>
 
-
-    <button type="submit">Submit</button>
+    <br>
+    <button type="submit">Login</button>
 </form>
+<br>
+<a href="http://localhost/final_project/complaint/register.php">Register</a>
 
 </body>
 </html>
