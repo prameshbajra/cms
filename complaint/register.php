@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if (mysqli_stmt_execute($stmt)) {
             return header("location: success.php");
         } else {
-            echo "ERROR: Could not prepare query: $sql. " . mysqli_error($conn);
+            echo "Oops! Sorry, you cannot use that email.";
         }
     } else {
-        echo "ERROR: Could not prepare query: $sql. " . mysqli_error($conn);
+        echo "Oops! Sorry, you cannot use that email.";
     }
     // Close statement
     mysqli_stmt_close($stmt);

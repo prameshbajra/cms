@@ -1,6 +1,7 @@
 <?php
 require_once "config.php";
 $sql = "DELETE FROM complaint WHERE id = ?";
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
     mysqli_stmt_bind_param($stmt, "i", $param_id);
     //set parameter

@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
 $conn = mysqli_connect("localhost", "root", "", "cms");
+session_start();
 
 // Check connection
 if ($conn === false) {
@@ -17,20 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Prepare an insert statement
     $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
 
-    echo $sql;
-
     if ($res = mysqli_query($conn, $sql)) {
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_array($res);
             $role = $row[3];
-            echo $role;
-            echo "*****";
+            $_SESSION['role'] = $role;
+            $_SESSION['user_id'] = $row[0];
             if ($role == 'admin') {
                 return header("location: retrieve_to.php");
             }
             return header("location: create.php");
         } else {
-            echo "No such user exists. Please try again. \n <a href='http://localhost/final_project/complaint/login.php'>Login</a>";
+            echo "No such user exists. Please try again. \n";
         }
     } else {
         echo "ERROR: Could not prepare query: $sql. " . mysqli_error($conn);

@@ -1,46 +1,43 @@
 <?php
-    /* Attempt MySQL server connection. Assuming you are running MySQL
-    server with default setting (user 'root' with no password) */
-    $conn = mysqli_connect("localhost", "root", "", "cms");
+/* Attempt MySQL server connection. Assuming you are running MySQL
+server with default setting (user 'root' with no password) */
+$conn = mysqli_connect("localhost", "root", "", "cms");
+session_start();
 
-    // Check connection
-    if ($conn === false) {
-        die("ERROR: Could not connect. " . mysqli_connect_error());
-    }
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        // Prepare an insert statement
-        $sql = "INSERT INTO complaint (name, complaint, complaint_type) VALUES (?, ?, ?)";
+// Check connection
+if ($conn === false) {
+    die("ERROR: Could not connect. " . mysqli_connect_error());
+}
 
-        // Set parameters
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        $param_name = trim($_POST['name']);
-        $param_complaint = trim($_POST['complaint']);
-        $param_complaint_type = trim($_POST['complaint_type']);
+    // Set parameters
+    $params_user_id = $_SESSION['user_id'];
+    $param_product_description = trim($_POST['product_description']);
+    $param_complaint = trim($_POST['complaint']);
+    $param_status = 'PENDING';
 
-        echo $param_name;
-        echo $param_complaint;
-        echo $param_complaint_type;
+    // Prepare an insert statement
+    $sql = "INSERT INTO complaint (user_id, product_description, complaint, status) VALUES (?, ?, ?, ?)";
 
-        if ($stmt = mysqli_prepare($conn, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_name, $param_complaint, $param_complaint_type);
+    if ($stmt = mysqli_prepare($conn, $sql)) {
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "isss", $params_user_id, $param_product_description, $param_complaint, $param_status);
 
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-                echo "3";
-                // header("location: retrieve_to.php");
-            } else {
-                echo "ERROR: Could not execute query: $sql. " . mysqli_error($conn);
-            }
-
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            echo "DONE";
         } else {
-            echo "ERROR: Could not prepare query: $sql. " . mysqli_error($conn);
+            echo "Sorry you cannot create complaint against this product";
         }
-        // Close statement
-        mysqli_stmt_close($stmt);
+    } else {
+        echo "Sorry you cannot create complaint against this product";
+    }
+    // Close statement
+    mysqli_stmt_close($stmt);
 
-        // Close connection
-        mysqli_close($conn);
+    // Close connection
+    mysqli_close($conn);
 }
 ?>
 
@@ -59,25 +56,29 @@
 <body>
 
 
-<form action="create.php" method="post" class="form-floating">
-    <label>Name</label>
-    <input type="text" name="name">
 
-    <br>
+<?php
+    if (isset($_SESSION['user_id'])){
+        echo '
+        <div>
+            <a href="logout.php">Click here to log out</a>
+        </div>
+        <br><br><br>
+        <form action="create.php" method="post" class="form-floating">
+            <label>Product Description</label>
+            <input type="text" name="product_description" placeholder="Enter your purchased product description.">
 
-    <label>Complaint</label>
-    <input type="text" name="complaint">
+            <br>
 
-    <br>
+            <label>Complaint</label>
+            <input type="text" name="complaint" placeholder="What problem did you have?">
 
-    <label>Complaint Type</label>
-    <input type="text" name="complaint_type">
-
-
-<br>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>';
+    } else {
+        echo "<h3>You are not supposed to be here</h3>";
+    }
+?>
 </body>
 </html>
