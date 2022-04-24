@@ -1,4 +1,6 @@
 <?php
+include './bootstrap.php';
+
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
 $conn = mysqli_connect("localhost", "root", "", "cms");
@@ -60,22 +62,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <?php
     if (isset($_SESSION['user_id'])){
         echo '
-        <div>
-            <a href="logout.php">Click here to log out</a>
-        </div>
-        <br><br><br>
-        <form action="create.php" method="post" class="form-floating">
-            <label>Product Description</label>
-            <input type="text" name="product_description" placeholder="Enter your purchased product description.">
+        <div class="container">
+            <div style="float:right;">
+                <a class="btn btn-secondary" href="logout.php">Logout</a>
+            </div>
+            <br><br><br>
+            <form action="create.php" method="post" class="form-floating">
+                <div class="mb-3">
+                    <label class="form-label">Product Description</label>
+                    <input name="product_description" type="text" class="form-control" id="exampleFormControlInput1"
+                               placeholder="Enter the purchased product">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Complaint</label>
+                    <input name="complaint" type="text" class="form-control" id="exampleFormControlInput1"
+                       placeholder="File a complaint">
+                </div>
 
-            <br>
-
-            <label>Complaint</label>
-            <input type="text" name="complaint" placeholder="What problem did you have?">
-
-            <br>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>';
+                <br>
+                <button type="submit" class="btn btn-warning">Submit</button>
+            </form>
+        </div>';
     } else {
         echo "<h3>You are not supposed to be here</h3>";
     }

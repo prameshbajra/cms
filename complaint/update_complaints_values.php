@@ -1,4 +1,6 @@
 <?php
+include './bootstrap.php';
+
     $link = mysqli_connect("localhost", "root", "", "cms");
 
     $product_description = trim($_POST['product_description']);

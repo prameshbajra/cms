@@ -1,4 +1,6 @@
 <?php
+include './bootstrap.php';
+
 // Include config file
 require_once "config.php";
 
@@ -10,7 +12,7 @@ $product_description = '';
 $complaint = '';
 $status = '';
 
-if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 
     $param_id = $_GET["id"];
 
@@ -31,26 +33,40 @@ if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 <title>Edit Data</title>
             </head>
             <body>
-            <a href="retrieve_to.php">Home</a>
-            <br><br>
-            <form method="post" action="update_complaints_values.php">
-                <input type="hidden" name="id" value="'.$id.'"/><br>
-            
-                <label> User Id -> '.$user_id.'</label>
-                <input type="hidden" name="user_id" value="'.$user_id.'"/><br>
-                
-                <label>Product Description</label>
-                <input type="text" name="product_description" value="'.$product_description.'"/><br>
-                
-                <label>Complaint</label>
-                <input type="text" name="complaint" value="'.$complaint.'" /><br>
-                
-                <label>Status</label>
-                <input type="text" name="status" value="'.$status.'" /><br>
-                
-                <input type="submit" value="Update">
-            </form>
-            
+            <div class="container">
+                <div style="float:right;">
+                    <a class="btn btn-secondary" href="retrieve_to.php">Home</a>
+                </div>
+                <br><br>
+                <form method="post" action="update_complaints_values.php">
+                    <input type="hidden" name="id" value="'.$id.'"/><br>
+                    <div class="mb-3">
+                        <label class="form-label">User id </label>
+                        <input name="user_id" disabled class="form-control" value="' . $user_id . '" id="exampleFormControlInput1"
+                               placeholder="Enter user id">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Product Description</label>
+                        <input name="product_description" type="text" class="form-control" value="' . $product_description . '" id="exampleFormControlInput1"
+                               placeholder="Enter the purchased product">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Complaint</label>
+                        <input name="complaint" type="text" class="form-control" value="' . $complaint . '" id="exampleFormControlInput1"
+                               placeholder="File your complaint">
+                   </div>
+                   <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <input name="status" type="text" class="form-control" value="' . $status . '" id="exampleFormControlInput1"
+                               placeholder="">                  
+                   </div>
+                  <div class="row">
+                        <div class="col-6">
+                            <button type="submit" class="w-50 btn btn-warning">Update</button>
+                        </div>
+                  </div>                  
+                </form>
+            </div>
             </body>
         </html>';
     }

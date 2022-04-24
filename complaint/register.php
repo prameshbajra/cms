@@ -1,4 +1,6 @@
 <?php
+include './bootstrap.php';
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -54,23 +56,34 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <br><br><br><br>
+            <h2 class="text-center">Register as a new user</h2>
 
-<h2>Register as a new user.</h2>
+            <form action="register.php" method="post">
+                <br>
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input name="email" type="email" class="form-control" id="exampleFormControlInput1"
+                           placeholder="name@example.com">
+                </div>
 
-<form action="register.php" method="post" class="form-floating">
-    <label>Email</label>
-    <input type="text" name="email">
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleFormControlInput1"
+                           placeholder="password">
+                </div>
 
-    <br>
+                <br>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="w-100 btn btn-warning">Submit</button>
+                    </div>
+                </div>
 
-    <label>Password</label>
-    <input type="text" name="password">
-
-    <br>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+            </form>
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 
 <?php
+include './bootstrap.php';
+
 /* Attempt Mysql server connection. Assuming you are running MySQL
 server with default setting  (user 'root' with no password)*/
 $link = mysqli_connect("localhost", "root", "", "cms");
@@ -10,23 +12,28 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
     }
 
     echo "
-    <div>
-        <a href='logout.php'>Click here to log out</a>
-    </div>
-    <br><br><br>
-    <h3>Users List</h3>";
+        <div class='container'>
+           <div style='float:right;'>
+                <a class='btn btn-secondary' href='logout.php'>Logout</a>
+            </div>
+            <br><br><br>
+    ";
     $sql = "SELECT * FROM users";
     if ($result = mysqli_query($link, $sql)) {
         if (mysqli_num_rows($result) > 0) {
-            echo "<table border='1'>";
-            echo "<tr>";
-            echo "<th>id</th>";
-            echo "<th>email</th>";
-            echo "<th>role</th>";
-            echo "<th>Edit</th>";
-            echo "<th>Delete</th>";
-
-            echo "</tr>";
+            echo " 
+                <div class='row'>  
+                    <div class='col-6'>
+                        <h3>Users List</h3><br>
+                        <table class='table table-striped table-bordered'>
+                            <tr>
+                                <th>id</th>
+                                <th>email</th>
+                                <th>role</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+            ";
             foreach ($result as $row) {
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
@@ -37,25 +44,30 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 echo "</tr>";
 
             }
-            echo "</table>";
+            echo "
+                        </table>
+                    </div>
+            ";
         }
     }
-
-    echo "<br><br><br> <h3>Compliant List</h3>";
 
     $sql = "SELECT * FROM complaint";
     if ($result = mysqli_query($link, $sql)) {
         if (mysqli_num_rows($result) > 0) {
-            echo "<table border='1'>";
-            echo "<tr>";
-            echo "<th>Id</th>";
-            echo "<th>User Id</th>";
-            echo "<th>Product Description</th>";
-            echo "<th>Compliant</th>";
-            echo "<th>Status</th>";
-            echo "<th>Edit</th>";
-            echo "<th>Delete</th>";
-            echo "</tr>";
+            echo "
+                <div class='col-6'>
+                    <h3>Complaints List</h3> <br>
+                    <table class='table table-striped table-bordered'>
+                        <tr>
+                            <th>Id</th>
+                            <th>User Id</th>
+                            <th>Product Description</th>
+                            <th>Compliant</th>
+                            <th>Status</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+            ";
             foreach ($result as $row) {
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
@@ -68,7 +80,11 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 echo "</tr>";
 
             }
-            echo "</table>";
+            echo "
+                    </table>
+                </div>
+            </div>
+            ";
             //Free Result Set
 
             mysqli_free_result($result);
